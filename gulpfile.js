@@ -111,6 +111,13 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build/assets/js/'))
     .on('error', gutil.log);
 });
+// compile from sass to css
+gulp.task('sass', function() {
+  return gulp.src('src/assets/sass/*')
+      .pipe(sass())
+      .pipe(gulp.dest('src/assets/css/'))
+      .on('error', sass.logError)
+});
 
 gulp.task('html-watch', function() {
   runSequence('index', 'inject-assets', reload);
@@ -124,9 +131,11 @@ gulp.task('css-watch', function() {
 gulp.task('img-watch', function() {
   runSequence('img', reload);
 });
-
 gulp.task('font-watch', function() {
   runSequence('font', reload);
+});
+gulp.task('sass-watch', function() {
+  runSequence('sass', 'css-watch');
 });
 
 // serves build folder
@@ -134,9 +143,10 @@ gulp.task('serve', function() {
   // Serve files from the root of this project
   browserSync.init(browserSyncConfig);
 
+  gulp.watch('src/assets/sass/*.sass', ['sass-watch']);
   gulp.watch('src/*.html', ['html-watch']);
   gulp.watch('src/assets/js/*.js', ['js-watch']);
-  gulp.watch('src/assets/css/*.css', ['css-watch']);
+  //gulp.watch('src/assets/css/*.css', ['css-watch']);
   gulp.watch('src/assets/img/*', ['img-watch']);
   gulp.watch('src/assets/font/*', ['font-watch']);
 });
