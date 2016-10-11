@@ -26,7 +26,8 @@
     "gulp-newer": "^1.1.0",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "gulp-sass": "^2.3.2"
   },
   "eslintConfig": {
     "extends": "google"
